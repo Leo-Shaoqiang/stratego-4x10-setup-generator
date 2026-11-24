@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stratego 4x10 Opening Setup Generator & Fortress Architect | StrategoCheatSheet</title>
+  <meta name="description" content="Interactive 4x10 setup builder and defensive fortress generator for Stratego. Validate piece counts, explore tournament setups, and review combat rules.">
+  <link rel="canonical" href="https://strategocheatsheet.com/setups">
+  <style>
+    :root {
+      --bg: #0c1222;
+      --card-bg: #172033;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --gold: #f59e0b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #243048;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    header { width: 100%; max-width: 900px; text-align: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    .badge { display: inline-block; padding: 4px 12px; background: rgba(59, 130, 246, 0.15); color: var(--blue); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; text-decoration: none; margin-bottom: 12px; }
+    h1 { font-size: 1.85rem; margin-bottom: 8px; color: #fff; }
+    p.subtitle { color: var(--muted); font-size: 0.95rem; }
+    .container { width: 100%; max-width: 900px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .btn { background: #1e293b; color: #fff; border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: 0.2s; }
+    .btn.active, .btn:hover { background: var(--blue); border-color: var(--blue); }
+    .grid-4x10 { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; width: 100%; max-width: 700px; margin: 0 auto; }
+    .grid-cell { aspect-ratio: 1; background: #0f172a; border: 1px solid #334155; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; cursor: default; }
+    .grid-cell.flag { background: rgba(239, 68, 68, 0.2); border-color: var(--red); color: var(--red); }
+    .grid-cell.bomb { background: rgba(245, 158, 11, 0.2); border-color: var(--gold); color: var(--gold); }
+    .grid-cell.marshal { background: rgba(59, 130, 246, 0.2); border-color: var(--blue); color: var(--blue); }
+    .meta-box { background: rgba(59, 130, 246, 0.08); border: 1px solid var(--blue); border-radius: 8px; padding: 16px; margin-top: 16px; font-size: 0.95rem; line-height: 1.5; }
+    footer { margin-top: 40px; padding: 20px 0; border-top: 1px solid var(--border); width: 100%; max-width: 900px; text-align: center; font-size: 0.875rem; color: var(--muted); }
+    footer a { color: var(--blue); text-decoration: none; margin: 0 10px; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="badge" href="https://strategocheatsheet.com/setups" target="_blank">Official Stratego Tactical Companion</a>
+    <h1>Stratego 4x10 Opening Setup Generator & Fortress Architect</h1>
+    <p class="subtitle">Deploy 40 pieces legally across 4 rows of 10 squares. Explore tournament setups and combat matrix.</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Choose Defensive Archetype:</h2>
+      <div class="btn-row">
+        <button class="btn active" onclick="loadSetup('corner')">Corner Flag Fortress</button>
+        <button class="btn" onclick="loadSetup('bluff')">Center Bluff Trap</button>
+        <button class="btn" onclick="loadSetup('shoreline')">Shoreline Chokepoint Defense</button>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 8px; color: var(--muted); font-size: 0.85rem;">Frontline (Row 4 - Facing Lakes)</div>
+      <div class="grid-4x10" id="board-grid"></div>
+      <div style="text-align: center; margin-top: 8px; color: var(--muted); font-size: 0.85rem;">Backline (Row 1 - Defensive Wall)</div>
+
+      <div class="meta-box" id="setup-details">
+        <strong>Corner Flag Fortress:</strong> Flag is safely secured in square (1, 1), protected by 3 triangular Bombs. Marshal is positioned behind lake chokepoints to intercept early Miner attacks.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Official resource for <a href="https://strategocheatsheet.com/">Stratego Tactical Companion</a></p>
+    <p style="margin-top: 8px;">
+      <a href="https://strategocheatsheet.com/setups">4x10 Setups</a> | 
+      <a href="https://strategocheatsheet.com/rules">how to play stratego</a> | 
+      <a href="https://strategocheatsheet.com/pieces">Stratego Tactical Companion</a>
+    </p>
+  </footer>
+
+  <script>
+    const setups = {
+      corner: {
+        grid: [
+          // Row 4 (Frontline)
+          ['Scout','Miner','Serg','Lt','Capt','Capt','Lt','Serg','Miner','Scout'],
+          // Row 3
+          ['Major','Col','Bomb','Gen','Major','Col','Bomb','Major','Miner','Serg'],
+          // Row 2
+          ['Bomb','Bomb','Marshal','Spy','Capt','Capt','Lt','Lt','Miner','Scout'],
+          // Row 1 (Backline)
+          ['Flag','Bomb','Bomb','Miner','Scout','Scout','Scout','Scout','Scout','Serg']
+        ],
+        desc: "<strong>Corner Flag Fortress:</strong> Flag is safely secured in square (1, 1), enclosed by Bombs in (1,2), (2,1), and (2,2). The Marshal guards the column to intercept enemy Miners before they can disarm the fortress."
+      },
+      bluff: {
+        grid: [
+          ['Scout','Major','Miner','Lt','Capt','Capt','Lt','Miner','Major','Scout'],
+          ['Bomb','Bomb','Serg','Col','Gen','Marshal','Col','Serg','Bomb','Bomb'],
+          ['Bomb','Spy','Capt','Lt','Major','Lt','Capt','Miner','Bomb','Scout'],
+          ['Scout','Miner','Serg','Flag','Serg','Miner','Scout','Scout','Scout','Scout']
+        ],
+        desc: "<strong>Center Bluff Trap:</strong> Flag is nestled in square (1, 4) without a Bomb enclosure, surrounded by heavy officers. The outer corners are heavily fortified with false Bomb fortresses to divert enemy attacks away from the actual Flag."
+      },
+      shoreline: {
+        grid: [
+          ['Scout','Scout','Major','Lt','Col','Gen','Lt','Major','Scout','Scout'],
+          ['Miner','Capt','Marshal','Bomb','Bomb','Bomb','Bomb','Capt','Miner','Serg'],
+          ['Serg','Lt','Capt','Spy','Major','Col','Capt','Lt','Serg','Miner'],
+          ['Bomb','Bomb','Flag','Bomb','Miner','Miner','Scout','Scout','Scout','Serg']
+        ],
+        desc: "<strong>Shoreline Chokepoint Defense:</strong> Frontline is stacked with high-mobility Scouts and Officers to immediately dominate the two 2x2 lake chokepoints. Bombs form a wall on Row 3, funnelling enemy troops into crossfire."
+      }
+    };
+
+    function loadSetup(name) {
+      document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      const data = setups[name];
+      const gridEl = document.getElementById('board-grid');
+      gridEl.innerHTML = '';
+      
+      data.grid.forEach(row => {
+        row.forEach(piece => {
+          let cls = 'grid-cell';
+          if (piece === 'Flag') cls += ' flag';
+          else if (piece === 'Bomb') cls += ' bomb';
+          else if (piece === 'Marshal' || piece === 'General') cls += ' marshal';
+          gridEl.innerHTML += `<div class="${cls}"><span>${piece}</span></div>`;
+        });
+      });
+      document.getElementById('setup-details').innerHTML = data.desc;
+    }
+
+    loadSetup('corner');
+  </script>
+</body>
+</html>
