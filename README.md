@@ -2,9 +2,9 @@
 
 Algorithmic reference and tactical generator for competitive 4x10 board configurations in Stratego, including Corner Flag fortresses, Bluff Defenses, Shoreline Traps, and Aggressive Spearheads.
 
-🔗 **Interactive 4x10 Setups & Board Editor**: [4x10 Setups](https://strategocheatsheet.com/setups)  
-🔗 **Combat Rules & Battle Judge**: [how to play stratego](https://strategocheatsheet.com/rules)  
-🔗 **Complete Piece Rank & Dossier**: [Stratego Tactical Companion](https://strategocheatsheet.com/pieces)
+🔗 **Interactive 4x10 Setups & Board Editor**: [4x10 Setups](https://strategocheatsheets.com/setups)  
+🔗 **Combat Rules & Battle Judge**: [how to play stratego](https://strategocheatsheets.com/rules)  
+🔗 **Complete Piece Rank & Dossier**: [Stratego Tactical Companion](https://strategocheatsheets.com/pieces)
 
 ---
 
@@ -71,4 +71,4 @@ function validateStrategoSetup(board) {
 }
 ```
 
-For interactive drag-and-drop board setup, visual rank conversions, and printable strategy charts, explore the [Stratego Tactical Companion](https://strategocheatsheet.com/).
+For interactive drag-and-drop board setup, visual rank conversions, and printable strategy charts, explore the [Stratego Tactical Companion](https://strategocheatsheets.com/).
